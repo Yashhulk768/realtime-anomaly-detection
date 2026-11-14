@@ -20,7 +20,7 @@ videos ──► extract_frames.py ──► train.py ──► export_onnx.py
 
 A browser app (`app.py`, built with Gradio) lets you upload a CCTV clip and watch the **INT8 model running on the CPU**: the video comes back with a live overlay and a red **ALERT** banner when abnormal activity persists, plus a confidence timeline and a timestamped alert log. Predictions are smoothed over several frames so a single odd frame doesn't trigger an alarm.
 
-<!-- demo GIF goes here: ![Demo](docs/demo.gif) -->
+![Demo](docs/demo.gif)
 
 ## Key results
 
