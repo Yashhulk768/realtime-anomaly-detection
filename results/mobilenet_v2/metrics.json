@@ -1,0 +1,10 @@
+{
+  "model": "mobilenet_v2",
+  "test_accuracy": 0.5537588652482269,
+  "test_macro_f1": 0.529582186306952,
+  "best_val_macro_f1": 0.445756463466101,
+  "best_epoch": 8,
+  "epochs": 8,
+  "parameters": 2230277,
+  "train_minutes": 3.5
+}

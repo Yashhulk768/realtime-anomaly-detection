@@ -1,0 +1,18 @@
+{
+  "FP32": {
+    "file": "mobilenet_v2_fp32.onnx",
+    "size_mb": 8.89,
+    "latency_ms_1_thread": 2.9,
+    "latency_ms_32_threads": 2.45,
+    "test_accuracy": 0.5535,
+    "test_macro_f1": 0.5294
+  },
+  "INT8": {
+    "file": "mobilenet_v2_int8.onnx",
+    "size_mb": 2.61,
+    "latency_ms_1_thread": 2.57,
+    "latency_ms_32_threads": 5.11,
+    "test_accuracy": 0.5443,
+    "test_macro_f1": 0.5225
+  }
+}

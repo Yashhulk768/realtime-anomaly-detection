@@ -1,0 +1,11 @@
+              precision    recall  f1-score   support
+
+       Arson      0.237     0.053     0.087      1200
+    Burglary      0.434     0.495     0.462      2250
+   Explosion      0.243     0.207     0.224      1200
+    Fighting      0.103     0.111     0.107      1200
+      Normal      0.418     0.664     0.513      1200
+
+    accuracy                          0.334      7050
+   macro avg      0.287     0.306     0.279      7050
+weighted avg      0.309     0.334     0.306      7050
