@@ -16,6 +16,12 @@ videos ──► extract_frames.py ──► train.py ──► export_onnx.py
                                   MobileNetV2)   CPU benchmark)
 ```
 
+## Demo
+
+A browser app (`app.py`, built with Gradio) lets you upload a CCTV clip and watch the **INT8 model running on the CPU**: the video comes back with a live overlay and a red **ALERT** banner when abnormal activity persists, plus a confidence timeline and a timestamped alert log. Predictions are smoothed over several frames so a single odd frame doesn't trigger an alarm.
+
+<!-- demo GIF goes here: ![Demo](docs/demo.gif) -->
+
 ## Key results
 
 All results are on **test videos the model never saw during training**.
@@ -62,7 +68,8 @@ INT8 cut the model size by 3.4× but was only 1.1× faster on one thread, and *s
 ## Roadmap
 
 - [ ] C++ inference program using ONNX Runtime
-- [ ] Real-time demo on a video file / webcam with prediction smoothing and alert logging
+- [x] Browser demo on uploaded video with prediction smoothing and alert logging (`app.py`)
+- [ ] Live webcam / RTSP camera stream input
 - [ ] Video-level evaluation (aggregating frame predictions per video)
 - [ ] Benchmark FP32 vs INT8 on an Arm device (Raspberry Pi)
 - [ ] Temporal models (e.g. frame features + LSTM) to use motion information
@@ -85,6 +92,9 @@ python train.py --model mobilenet
 
 # 3. Export to ONNX, quantise to INT8 and benchmark on CPU
 python export_onnx.py --checkpoint models/mobilenet_v2.pt
+
+# 4. Launch the browser demo, then open http://localhost:7860
+python app.py
 ```
 
 ## Repository structure
@@ -93,6 +103,7 @@ python export_onnx.py --checkpoint models/mobilenet_v2.pt
 extract_frames.py   frame extraction + video-level train/val/test split
 train.py            baseline CNN and MobileNetV2 training and evaluation
 export_onnx.py      ONNX export, INT8 static quantisation, CPU benchmark
+app.py              Gradio browser demo: annotated video, timeline, alert log
 models/             trained PyTorch checkpoints and ONNX models
 results/            classification reports, confusion matrices, curves, benchmarks
 ```

@@ -10,3 +10,4 @@ tqdm
 onnx
 onnxruntime
 onnxscript
+gradio
