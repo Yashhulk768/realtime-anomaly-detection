@@ -44,6 +44,16 @@ Random guessing across five classes would score 20%.
 
 **INT8 is 3.4× smaller with less than 1 point of accuracy loss.** PyTorch and ONNX outputs match to within 1.4 × 10⁻⁶.
 
+### C++ inference (ONNX Runtime C++ API + OpenCV)
+
+A native C++ program (`cpp/`) runs the INT8 model with the same preprocessing as training, on images or video (with smoothed, timestamped alerts).
+
+| Measurement (INT8, 1 CPU thread, 500 runs) | Result |
+|---|---|
+| Mean latency | 2.57 ms |
+| Median / 95th percentile | 2.55 ms / 2.72 ms |
+| Throughput | ~389 frames/s |
+
 | Baseline CNN | MobileNetV2 |
 |---|---|
 | ![Baseline confusion matrix](results/cnn_baseline/confusion_matrix.png) | ![MobileNetV2 confusion matrix](results/mobilenet_v2/confusion_matrix.png) |
@@ -67,7 +77,7 @@ INT8 cut the model size by 3.4× but was only 1.1× faster on one thread, and *s
 
 ## Roadmap
 
-- [ ] C++ inference program using ONNX Runtime
+- [x] C++ inference program using ONNX Runtime (`cpp/`)
 - [x] Browser demo on uploaded video with prediction smoothing and alert logging (`app.py`)
 - [ ] Live webcam / RTSP camera stream input
 - [ ] Video-level evaluation (aggregating frame predictions per video)
@@ -97,6 +107,15 @@ python export_onnx.py --checkpoint models/mobilenet_v2.pt
 python app.py
 ```
 
+**C++ build** (needs `cmake`, `libopencv-dev`, and the prebuilt [ONNX Runtime](https://github.com/microsoft/onnxruntime/releases) Linux release unpacked into `cpp/third_party/onnxruntime`):
+
+```bash
+cd cpp
+cmake -S . -B build && cmake --build build -j
+./build/anomaly_detect ../models/mobilenet_v2_int8.onnx path/to/frame.jpg --bench 500
+./build/anomaly_detect ../models/mobilenet_v2_int8.onnx path/to/video.mp4
+```
+
 ## Repository structure
 
 ```
@@ -104,6 +123,7 @@ extract_frames.py   frame extraction + video-level train/val/test split
 train.py            baseline CNN and MobileNetV2 training and evaluation
 export_onnx.py      ONNX export, INT8 static quantisation, CPU benchmark
 app.py              Gradio browser demo: annotated video, timeline, alert log
+cpp/                C++ inference program (ONNX Runtime C++ API + OpenCV, CMake)
 models/             trained PyTorch checkpoints and ONNX models
 results/            classification reports, confusion matrices, curves, benchmarks
 ```
